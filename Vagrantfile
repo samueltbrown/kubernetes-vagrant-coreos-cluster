@@ -102,7 +102,7 @@ DNS_UPSTREAM_SERVERS = ENV['DNS_UPSTREAM_SERVERS'] || "8.8.8.8:53,8.8.4.4:53"
 
 SERIAL_LOGGING = (ENV['SERIAL_LOGGING'].to_s.downcase == 'true')
 GUI = (ENV['GUI'].to_s.downcase == 'true')
-USE_KUBE_UI = ENV['USE_KUBE_UI'] || false
+USE_KUBE_UI = ENV['USE_KUBE_UI'] || true
 
 BOX_TIMEOUT_COUNT = ENV['BOX_TIMEOUT_COUNT'] || 50
 
@@ -316,7 +316,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               end
             end
 
-            res, uri.path = nil, '/api/v1/namespaces/kube-system/replicationcontrollers/kube-ui-v3'
+            res, uri.path = nil, '/api/v1/namespaces/kube-system/replicationcontrollers/kube-ui-v5'
             begin
               res = Net::HTTP.get_response(uri)
             rescue
@@ -342,7 +342,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
               end
             end
 
-            info "Kubernetes kube-ui will be available on http://#{MASTER_IP}:8080/ui"
+            res, uri.path = nil, '/api/v1/namespaces/kube-system/replicationcontrollers/kubernetes-dashboard'
+            begin
+              res = Net::HTTP.get_response(uri)
+            rescue
+            end
+            if not res.is_a? Net::HTTPSuccess
+              system "KUBERNETES_MASTER=\"http://#{MASTER_IP}:8080\" kubectl create -f https://rawgit.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml"
+            end
+
+            info "Kubernetes Dashboard will be available on http://#{MASTER_IP}:8080/ui"
+            info "Kubernetes kube-ui will be available on http://#{MASTER_IP}:8080/api/v1/proxy/namespaces/kube-system/services/kube-ui"
           end
 
         end
