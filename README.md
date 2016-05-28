@@ -1,4 +1,16 @@
 # kubernetes-vagrant-coreos-cluster
+
+This repository was forked to serve as a proof-of-concept for learning Kubernetes while setting up the [Capital One Hygieia Dashboard](https://github.com/capitalone/Hygieia).  It has also been enhanced with kubernetes files for deploying:
+
+* Weavescope
+* CoreOS Tectonic Console (You will need your own coreos-pull-secret.yaml file)
+* Kube UI (installed automatically)
+* DNS Controller v11
+* Cluster API Tester
+* Busybox
+
+Please note that with the exception of Kube UI, all of the other services, including Hygieia, must be manually installed using kubectl.
+
 Turnkey **[Kubernetes](https://github.com/GoogleCloudPlatform/kubernetes)**
 cluster setup with **[Vagrant](https://www.vagrantup.com)** (1.7.2+) and
 **[CoreOS](https://coreos.com)**.
@@ -78,7 +90,7 @@ VBoxManage dhcpserver remove --netname HostInterfaceNetworking-vboxnet0
 
 ### Parallels
 
-If you are using **Parallels Desktop**, you need to install **[vagrant-parallels](http://parallels.github.io/vagrant-parallels/docs/)** provider 
+If you are using **Parallels Desktop**, you need to install **[vagrant-parallels](http://parallels.github.io/vagrant-parallels/docs/)** provider
 ```
 vagrant plugin install vagrant-parallels
 ```

@@ -1,6 +1,6 @@
- - name: mongo
-   source: ./mongo
-   destination: /data/mongo
-   nfs: true
-   mount_options: 'nolock,vers=3,udp,noatime'
-   disabled: false
+ # - name: mongo
+ #   source: ./mongo
+ #   destination: /data/mongo
+ #   nfs: true
+ #   mount_options: 'nolock,vers=4,tcp,noatime'
+ #   disabled: false

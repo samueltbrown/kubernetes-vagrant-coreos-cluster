@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ labels:
+   name: hygieia-jenkins
+ name: hygieia-jenkins
+spec:
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       name: hygieia-jenkins
+   spec:
+     containers:
+     - image: capitalone/hygieia-jenkins-build-collector
+       name: hygieia-jenkins
+       env:
+       - name: MONGO_PORT
+         value: "tcp://FILL_IN_HOST:27017"
+       - name: MONGODB_PORT
+         value: "27017"
+       - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_USERNAME
+         value: " "
+       - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_PASSWORD
+         value: " "
+       - name: JENKINS_MASTER
+         value: "FILL_IN_MASTER_URL"
+       - name: JENKINS_USERNAME
+         value: "YOUR_USERNAME"
+       - name: JENKINS_API_KEY
+         value: "YOUR_API_KEY"

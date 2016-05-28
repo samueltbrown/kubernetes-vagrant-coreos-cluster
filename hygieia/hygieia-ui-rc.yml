@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ labels:
+   name: hygieia-ui
+ name: ui-controller
+spec:
+ replicas: 2
+ template:
+   metadata:
+     labels:
+       name: hygieia-ui
+   spec:
+     containers:
+     - image: capitalone/hygieia-ui
+       name: hygieia-ui
+       ports:
+       - name: web
+         containerPort: 80
+       - name: ssl
+         containerPort: 443
+       env:
+       - name: API_HOST
+         value: "hygieia-api"
+       - name: API_PORT
+         value: "8080"
+       livenessProbe:
+         httpGet:
+           path: /
+           port: 80
+         initialDelaySeconds: 30
+         timeoutSeconds: 30

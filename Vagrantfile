@@ -65,7 +65,7 @@ DOCKERCFG = File.expand_path(ENV['DOCKERCFG'] || "~/.dockercfg")
 
 DOCKER_OPTIONS = ENV['DOCKER_OPTIONS'] || ''
 
-KUBERNETES_VERSION = ENV['KUBERNETES_VERSION'] || '1.2.0'
+KUBERNETES_VERSION = ENV['KUBERNETES_VERSION'] || '1.2.2'
 
 CHANNEL = ENV['CHANNEL'] || 'alpha'
 #if CHANNEL != 'alpha'
@@ -98,7 +98,7 @@ NODE_CPUS = ENV['NODE_CPUS'] || 1
 BASE_IP_ADDR = ENV['BASE_IP_ADDR'] || "172.17.8"
 
 DNS_DOMAIN = ENV['DNS_DOMAIN'] || "cluster.local"
-DNS_UPSTREAM_SERVERS = ENV['DNS_UPSTREAM_SERVERS'] || "8.8.8.8:53,8.8.4.4:53"
+DNS_UPSTREAM_SERVERS = ENV['DNS_UPSTREAM_SERVERS'] || "192.168.40.10:53,192.168.40.10:53"
 
 SERIAL_LOGGING = (ENV['SERIAL_LOGGING'].to_s.downcase == 'true')
 GUI = (ENV['GUI'].to_s.downcase == 'true')
@@ -229,7 +229,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
           info "Configuring Kubernetes cluster DNS..."
           kHost.vm.provision :file, :source => File.join(File.dirname(__FILE__), "kube-system.yaml"), :destination => "/home/core/kube-system.yaml"
-          system "cp plugins/dns/dns-controller.yaml.tmpl temp/dns-controller.yaml"
+          system "cp plugins/dns/dns-controller-v11.yaml.tmpl temp/dns-controller.yaml"
           system "sed -e 's|__MASTER_IP__|#{MASTER_IP}|g' -i#{sedInplaceArg} ./temp/dns-controller.yaml"
           system "sed -e 's|__DNS_DOMAIN__|#{DNS_DOMAIN}|g' -i#{sedInplaceArg} ./temp/dns-controller.yaml"
           system "sed -e 's|__DNS_UPSTREAM_SERVERS__|#{DNS_UPSTREAM_SERVERS}|g' -i#{sedInplaceArg} ./temp/dns-controller.yaml"

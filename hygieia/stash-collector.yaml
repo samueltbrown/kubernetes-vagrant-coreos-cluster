@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ labels:
+   name: hygieia-stash
+ name: hygieia-stash
+spec:
+ replicas: 1
+ template:
+   metadata:
+     labels:
+       name: hygieia-stash
+   spec:
+     containers:
+     - image: capitalone/hygieia-stash-scm-collector
+       name: hygieia-stash
+       env:
+       - name: MONGO_PORT
+         value: "tcp://FILL_IN_HOST:27017"
+       - name: MONGODB_PORT
+         value: "27017"
+       - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_USERNAME
+         value: " "
+       - name: HYGIEIA_API_ENV_SPRING_DATA_MONGODB_PASSWORD
+         value: " "
+       - name: STASH_HOST
+         value: "FILL_IN_HOST"

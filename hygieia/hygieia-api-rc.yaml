@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+ labels:
+   name: hygieia-api
+ name: api-controller
+spec:
+ replicas: 2
+ template:
+   metadata:
+     labels:
+       name: hygieia-api
+   spec:
+     containers:
+     - image: capitalone/hygieia-api
+       name: hygieia-api
+       ports:
+       - name: api
+         containerPort: 8080
+       env:
+       - name: SPRING_DATA_MONGODB_HOST
+         value: "FILL_IN_HOST"
+       - name: SPRING_DATA_MONGODB_PORT
+         value: "27017"
+       - name: SPRING_DATA_MONGODB_USERNAME
+         value: " "
+       - name: SPRING_DATA_MONGODB_PASSWORD
+         value: " "

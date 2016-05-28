@@ -1,3 +1,5 @@
 .vagrant
 .dockercfg
 temp/*
+coreos-pull-secret.yaml
+tectonic/coreos-pull-secret.yaml
